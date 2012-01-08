@@ -7,26 +7,26 @@
 
 #include "treegenerator.h"
 
-cTreeGenerator::cTreeGenerator() //:
-//_pCrown( NULL )
+cTreeGenerator::cTreeGenerator() :
+_pCrown( NULL )
 {
 }
 
 cTreeGenerator::~cTreeGenerator()
 {
-//    if ( _pCrown != NULL )
-//    {
-//        delete _pCrown;
-//        _pCrown = NULL;
-//    }
+    if ( _pCrown != NULL )
+    {
+        delete _pCrown;
+        _pCrown = NULL;
+    }
 }
 
 void cTreeGenerator::init()
 {
- //   _pCrown = new cCrown();
+    _pCrown = new cCrown();
 }
 
 void cTreeGenerator::renderOneFrame()
 {
-//    _pCrown->render();
+    _pCrown->render();
 }

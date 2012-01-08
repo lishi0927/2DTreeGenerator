@@ -28,7 +28,7 @@ private:
 
 private:
 
-    //cCrown*     _pCrown;
+    cCrown*     _pCrown;
 
 };
 
