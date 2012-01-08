@@ -1,3 +1,7 @@
 *~
 nbproject
 premake4.lua
+.dep.inc
+2DTreeGenerator.make
+Makefile-2DTreeGenerator.mk
+obj/
