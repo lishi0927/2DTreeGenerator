@@ -4,6 +4,6 @@
 !! WORK IN PROGRESS !!
 ----------------------
 
-A basic application of the space colonisation algorithm (in 2D).
+A basic application of the space colonization algorithm (in 2D).
 
 
