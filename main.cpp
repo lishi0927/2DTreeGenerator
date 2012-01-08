@@ -5,8 +5,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#define SCREEN_W    640
-#define SCREEN_H    480
+#include "defines.h"
+#include "treegenerator.h"
 
 void init()
 {
@@ -16,6 +16,8 @@ void init()
         std::cerr << "Can't init SDL window." << std::endl;
         exit( EXIT_FAILURE );
     }
+    SDL_WM_SetCaption( SCREEN_TITLE, NULL );
+    cTreeGenerator::getInstance()->init();
 }
 
 void display()
@@ -26,10 +28,13 @@ void display()
     {
         glClear( GL_COLOR_BUFFER_BIT );
 
+        // rendering
+        cTreeGenerator::getInstance()->renderOneFrame();
+
         // flushing screen
         glFlush();
         SDL_GL_SwapBuffers();
-        
+
         // catching events
         SDL_WaitEvent( &event );
 
@@ -47,7 +52,8 @@ void display()
                 break;
         }
     }
-
+    
+    cTreeGenerator::killInstance();
     SDL_Quit();
 }
 
