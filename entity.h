@@ -23,9 +23,10 @@ public:
     bool    isVisible() { return _visible; }
 
     void    render();
+    bool    init();
 
     virtual void    renderEntity() = 0;
-    virtual void    initEntity() = 0;
+    virtual bool    initEntity() = 0;
 
 private:
 

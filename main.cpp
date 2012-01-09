@@ -17,6 +17,8 @@ void init()
         exit( EXIT_FAILURE );
     }
     SDL_WM_SetCaption( SCREEN_TITLE, NULL );
+
+    srand( time(NULL) ); // initialize rand seed
     cTreeGenerator::getInstance()->init();
 }
 

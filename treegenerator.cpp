@@ -5,6 +5,7 @@
  * Created on January 8, 2012, 10:02 PM
  */
 
+#include <assert.h>
 #include "treegenerator.h"
 
 cTreeGenerator::cTreeGenerator() :
@@ -24,6 +25,11 @@ cTreeGenerator::~cTreeGenerator()
 void cTreeGenerator::init()
 {
     _pCrown = new cCrown();
+    assert( _pCrown != NULL );
+    if ( _pCrown != NULL )
+    {
+        _pCrown->init();
+    }
 }
 
 void cTreeGenerator::renderOneFrame()

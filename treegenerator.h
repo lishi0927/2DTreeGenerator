@@ -8,8 +8,13 @@
 #ifndef TREEGENERATOR_H
 #define	TREEGENERATOR_H
 
+#include <vector>
+
+#include "defines.h"
+
 #include "singleton.h"
 #include "crown.h"
+#include "attractionpoint.h"
 
 class cTreeGenerator : public cSingleton< cTreeGenerator >
 {
@@ -29,7 +34,6 @@ private:
 private:
 
     cCrown*     _pCrown;
-
 };
 
 #endif	/* TREEGENERATOR_H */

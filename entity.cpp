@@ -20,6 +20,11 @@ cEntity::~cEntity()
 {
 }
 
+bool    cEntity::init()
+{
+    return initEntity();
+}
+
 void    cEntity::render()
 {
     if ( isVisible() == true )

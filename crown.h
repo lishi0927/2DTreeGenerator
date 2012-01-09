@@ -8,21 +8,28 @@
 #ifndef CROWN_H
 #define	CROWN_H
 
+#include <vector>
+
+#include "defines.h"
 #include "entity.h"
+#include "attractionpoint.h"
 
 class cCrown : public cEntity
 {
 
 public:
+    
     cCrown();
     cCrown(const cCrown& orig);
     virtual ~cCrown();
 
     // inherited from cEntity
     virtual void renderEntity();
-    virtual void initEntity();
+    virtual bool initEntity();
 
 private:
+
+    std::vector< cAttractionPoint* > _attractPointList;
 
 };
 
