@@ -6,6 +6,7 @@
  */
 
 #include <assert.h>
+#include <stdlib.h>
 #include "treegenerator.h"
 
 cTreeGenerator::cTreeGenerator() :
@@ -30,9 +31,19 @@ void cTreeGenerator::init()
     {
         _pCrown->init();
     }
+
+    unsigned short treeNodeX = rand() % (SCREEN_W / 3) +(SCREEN_W / 3); // only the 2nd third of the screen
+    unsigned short treeNodeY = 10;
+    cTreeNode*  pFirstTN = new cTreeNode( treeNodeX, treeNodeY );
+    _treeNodeList.push_back( pFirstTN );
 }
 
 void cTreeGenerator::renderOneFrame()
 {
     _pCrown->render();
+    unsigned int i;
+    for ( i = 0; i < _treeNodeList.size(); ++i )
+    {
+        _treeNodeList[i]->render();
+    }
 }

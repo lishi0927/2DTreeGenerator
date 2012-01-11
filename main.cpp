@@ -2,11 +2,14 @@
 #include <stdlib.h>
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 
 #include "defines.h"
+#include "macros.h"
 #include "treegenerator.h"
+#include "utils.h"
 
 void init()
 {
@@ -22,17 +25,30 @@ void init()
     cTreeGenerator::getInstance()->init();
 }
 
+void glBlitOnScreen( GLuint tex )
+{
+    glEnable( GL_TEXTURE_2D );
+    glBindTexture(GL_TEXTURE_2D, tex );
+    glBegin(GL_QUADS);
+        glTexCoord2d(0,1);  glVertex2d( SCREEN2GL_X(100),SCREEN2GL_Y(200) );
+        glTexCoord2d(0,0);  glVertex2d(SCREEN2GL_X(100), SCREEN2GL_Y(100));
+        glTexCoord2d(1,0);  glVertex2d(SCREEN2GL_X(200),SCREEN2GL_Y(100));
+        glTexCoord2d(1,1);  glVertex2d(SCREEN2GL_X(200),SCREEN2GL_Y(200));
+    glEnd();
+}
+
 void display()
 {
     bool loop = true;
     SDL_Event   event;
+
     while ( loop == true )
     {
         glClear( GL_COLOR_BUFFER_BIT );
 
         // rendering
         cTreeGenerator::getInstance()->renderOneFrame();
-
+        
         // flushing screen
         glFlush();
         SDL_GL_SwapBuffers();

@@ -29,7 +29,7 @@ ifeq ($(config),debug)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -L/usr/lib
-  LIBS      += -lSDL -lGL -lGLU
+  LIBS      += -lSDL -lSDL_image -lGL -lGLU
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
@@ -51,7 +51,7 @@ ifeq ($(config),release)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -O2
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -s -L/usr/lib
-  LIBS      += -lSDL -lGL -lGLU
+  LIBS      += -lSDL -lSDL_image -lGL -lGLU
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
@@ -65,7 +65,9 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/main.o \
+	$(OBJDIR)/movableentity.o \
 	$(OBJDIR)/crown.o \
+	$(OBJDIR)/treenode.o \
 	$(OBJDIR)/attractionpoint.o \
 	$(OBJDIR)/treegenerator.o \
 	$(OBJDIR)/entity.o \
@@ -132,7 +134,13 @@ endif
 $(OBJDIR)/main.o: main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/movableentity.o: movableentity.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/crown.o: crown.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/treenode.o: treenode.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/attractionpoint.o: attractionpoint.cpp

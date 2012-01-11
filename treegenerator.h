@@ -14,7 +14,7 @@
 
 #include "singleton.h"
 #include "crown.h"
-#include "attractionpoint.h"
+#include "treenode.h"
 
 class cTreeGenerator : public cSingleton< cTreeGenerator >
 {
@@ -34,6 +34,7 @@ private:
 private:
 
     cCrown*     _pCrown;
+    std::vector< cTreeNode* > _treeNodeList;
 };
 
 #endif	/* TREEGENERATOR_H */

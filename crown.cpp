@@ -5,6 +5,8 @@
  * Created on January 8, 2012, 9:56 PM
  */
 #include <iostream>
+#include <stdlib.h>
+
 #include "crown.h"
 
 cCrown::cCrown()
@@ -18,6 +20,12 @@ cCrown::cCrown(const cCrown& orig)
 
 cCrown::~cCrown()
 {
+    unsigned int i;
+    for ( i = 0; i < _attractPointList.size(); ++i )
+    {
+        delete _attractPointList[i];
+    }
+    _attractPointList.clear();
 }
 
 void    cCrown::renderEntity()
@@ -25,7 +33,10 @@ void    cCrown::renderEntity()
     unsigned int i;
     for ( i = 0; i < _attractPointList.size(); ++i )
     {
-        _attractPointList[i]->render();
+        if (  _attractPointList[i] != NULL )
+        {
+            _attractPointList[i]->render();
+        }
     }
 }
 
@@ -34,8 +45,9 @@ bool    cCrown::initEntity()
     unsigned int i;
     for ( i = 0; i < ATTRACTPOINT_NUMBER; ++i )
     {
-        // TODO: randomise attractpoints in a specific crownshape
-        cAttractionPoint* pAttractPoint = new cAttractionPoint();
+        unsigned short x = rand() % SCREEN_W + 1;
+        unsigned short y = rand() % (SCREEN_H - (SCREEN_H / 3)) + (SCREEN_H / 3);
+        cAttractionPoint*   pAttractPoint = new cAttractionPoint( x, y );
         if ( pAttractPoint->init() == true )
         {
             _attractPointList.push_back( pAttractPoint );
@@ -45,6 +57,5 @@ bool    cCrown::initEntity()
             return false;
         }
     }
-    
     return true;
 }

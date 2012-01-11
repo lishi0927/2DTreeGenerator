@@ -8,29 +8,22 @@
 #ifndef ATTRACTIONPOINT_H
 #define	ATTRACTIONPOINT_H
 
-#include "entity.h"
+#include "movableentity.h"
 
-class cAttractionPoint : public cEntity
+class cAttractionPoint : public cMovableEntity
 {
 
 public:
     
-    cAttractionPoint();
-    cAttractionPoint(const cAttractionPoint& orig);
+    cAttractionPoint( unsigned short x = 0, unsigned short y = 0 );
     virtual ~cAttractionPoint();
-
-    unsigned short  getX() { return _x; }
-    unsigned short  getY()  { return _y; }
 
     // inherited from cEntity
     virtual void renderEntity();
     virtual bool initEntity();
 
 private:
-
-    unsigned short  _x;
-    unsigned short  _y;
-
+    
 };
 
 #endif	/* ATTRACTIONPOINT_H */

@@ -7,12 +7,8 @@
 
 #include "entity.h"
 
-cEntity::cEntity() :
-_visible( true )
-{
-}
-
-cEntity::cEntity(const cEntity& orig)
+cEntity::cEntity()
+:_visible( true )
 {
 }
 

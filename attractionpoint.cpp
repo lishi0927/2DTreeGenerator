@@ -5,19 +5,12 @@
  * Created on January 8, 2012, 9:56 PM
  */
 #include <iostream>
-#include <stdlib.h>
 #include <GL/gl.h>
 
 #include "macros.h"
 #include "attractionpoint.h"
 
-cAttractionPoint::cAttractionPoint()
-: _x(0)
-, _y(0)
-{
-}
-
-cAttractionPoint::cAttractionPoint(const cAttractionPoint& orig)
+cAttractionPoint::cAttractionPoint( unsigned short x, unsigned short y ): cMovableEntity(x, y)
 {
 }
 
@@ -39,7 +32,5 @@ void    cAttractionPoint::renderEntity()
 
 bool    cAttractionPoint::initEntity()
 {
-    _x = rand() % SCREEN_W + 1;
-    _y = rand() % (SCREEN_H - (SCREEN_H / 3)) + (SCREEN_H / 3);
     return true;
 }

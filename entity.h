@@ -16,7 +16,6 @@ class   cEntity
 public:
 
     cEntity();
-    cEntity(const cEntity& orig);
     virtual ~cEntity();
 
     void    setVisible( bool val ) { _visible = val; }
@@ -28,9 +27,15 @@ public:
     virtual void    renderEntity() = 0;
     virtual bool    initEntity() = 0;
 
+protected:
+
+    unsigned short  _x;
+    unsigned short  _y;
+
 private:
 
     bool    _visible;
+
 };
 
 #endif	/* ENTITY_H */
