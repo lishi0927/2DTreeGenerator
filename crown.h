@@ -23,6 +23,9 @@ public:
     cCrown(const cCrown& orig);
     virtual ~cCrown();
 
+    std::vector< cAttractionPoint* > getAttractionList() { return _attractPointList; }
+    inline void removeAttraction( unsigned int idx ) { _attractPointList.erase(_attractPointList.begin() + idx); }
+
     // inherited from cEntity
     virtual void renderEntity();
     virtual bool initEntity();

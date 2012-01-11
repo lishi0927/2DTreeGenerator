@@ -11,6 +11,8 @@
 #include "treegenerator.h"
 #include "utils.h"
 
+#include "mymath.h"
+
 void init()
 {
     SDL_Init( SDL_INIT_VIDEO );
@@ -54,20 +56,24 @@ void display()
         SDL_GL_SwapBuffers();
 
         // catching events
-        SDL_WaitEvent( &event );
-
-        switch( event.type ) // screen events
+        while ( SDL_PollEvent( &event ) )
         {
-            case SDL_QUIT:
-                loop = false;
-                break;
-        }
+            switch( event.type ) // screen events
+            {
+                case SDL_QUIT:
+                    loop = false;
+                    break;
+            }
 
-        switch( event.key.keysym.sym ) // keyboard events
-        {
-            case SDLK_ESCAPE:
-                loop = false;
-                break;
+            switch( event.key.keysym.sym ) // keyboard events
+            {
+                case SDLK_ESCAPE:
+                    loop = false;
+                    break;
+                case SDLK_SPACE:
+                    cTreeGenerator::getInstance()->colonize();
+                    break;
+            }
         }
     }
     

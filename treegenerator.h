@@ -25,11 +25,14 @@ public:
 
     void    init();
     void    renderOneFrame();
+    void    colonize();
     
 private:
 
+    // private for singleton
     cTreeGenerator();
     ~cTreeGenerator();
+
 
 private:
 
