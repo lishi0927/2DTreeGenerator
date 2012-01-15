@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include <stdlib.h>
+#include <math.h>
 
 #include "crown.h"
 
@@ -40,22 +41,46 @@ void    cCrown::renderEntity()
     }
 }
 
-bool    cCrown::initEntity()
+bool    cCrown::fillCrown()
 {
     unsigned int i;
     for ( i = 0; i < ATTRACTPOINT_NUMBER; ++i )
     {
-        unsigned short x = rand() % SCREEN_W + 1;
-        unsigned short y = rand() % (SCREEN_H - (SCREEN_H / 3)) + (SCREEN_H / 3);
-        cAttractionPoint*   pAttractPoint = new cAttractionPoint( x, y );
-        if ( pAttractPoint->init() == true )
+        short x = rand() % (SCREEN_W) + 1;
+        short y = rand() % (SCREEN_H * 2 / 3) + SCREEN_H / 3;
+
+
+        double h = SCREEN_W / 2;
+        double k = ((SCREEN_H * 2 / 3) / 2) + SCREEN_H / 3;
+        double a = SCREEN_W;
+        a = a/2;
+        double b = (SCREEN_H / 3) * 2;
+        b = b/2;
+
+        bool isInElipsis = ((pow((x - h) / a, 2) + (pow((y - k)/b, 2)) ) <= 1);
+
+        if ( isInElipsis == true )
         {
-            _attractPointList.push_back( pAttractPoint );
+
+            cAttractionPoint*   pAttractPoint = new cAttractionPoint( x, y );
+            if ( pAttractPoint->init() == true )
+            {
+                _attractPointList.push_back( pAttractPoint );
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
-            return false;
+            i = i - 1; // if not contained in elipsis then re-compute another point.
         }
     }
     return true;
+}
+
+bool    cCrown::initEntity()
+{
+    return fillCrown();
 }

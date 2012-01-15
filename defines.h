@@ -10,9 +10,9 @@
 #define SCREEN_H          480
 #define SCREEN_TITLE    "2D Tree Generator"
 
-#define ATTRACTPOINT_NUMBER             800
-#define ATTRACTPOINT_RADIUS               10
-#define ATTRACTPOINT_KILLDISTANCE      20
+#define ATTRACTPOINT_NUMBER             500
+#define ATTRACTPOINT_RADIUS               50
+#define ATTRACTPOINT_KILLDISTANCE      10
 
 #define ATTRACTPOINT_SIZE                   5
 #define ATTRACTPOINT_GLCOLOR            255, 255, 255

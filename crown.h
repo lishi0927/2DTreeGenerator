@@ -31,6 +31,9 @@ public:
     virtual bool initEntity();
 
 private:
+    bool        fillCrown();
+
+private:
 
     std::vector< cAttractionPoint* > _attractPointList;
 
