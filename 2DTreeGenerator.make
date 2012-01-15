@@ -28,7 +28,7 @@ ifeq ($(config),debug)
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g
   CXXFLAGS  += $(CFLAGS) 
-  LDFLAGS   += -L/usr/lib
+  LDFLAGS   += -L/usr/lib -L/usr/lib64
   LIBS      += -lSDL -lSDL_image -lGL -lGLU
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
@@ -50,7 +50,7 @@ ifeq ($(config),release)
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -O2
   CXXFLAGS  += $(CFLAGS) 
-  LDFLAGS   += -s -L/usr/lib
+  LDFLAGS   += -s -L/usr/lib -L/usr/lib64
   LIBS      += -lSDL -lSDL_image -lGL -lGLU
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 

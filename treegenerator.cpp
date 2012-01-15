@@ -55,13 +55,13 @@ void cTreeGenerator::colonize()
     for ( i = 0; i < attractList.size(); ++i )
     {
         // todo: put vec2 in classes
-        Point2D aPoint( attractList[i]->getX(), attractList[i]->getY() );
+        cPoint2D aPoint( attractList[i]->getX(), attractList[i]->getY() );
 
         int mindist = -1;
         unsigned int mindistIDX;
         for ( j = 0; j < _treeNodeList.size(); ++j )
         {
-            Point2D tPoint( _treeNodeList[j]->getX(), _treeNodeList[j]->getY() );
+            cPoint2D tPoint( _treeNodeList[j]->getX(), _treeNodeList[j]->getY() );
 
             unsigned int dist = distance( aPoint, tPoint );
             if ( dist < mindist || mindist < 0 )
@@ -80,17 +80,17 @@ void cTreeGenerator::colonize()
         if ( _treeNodeList[i]->getInfluenceList().size() > 0 )
         {
             std::vector< unsigned int > influenceList = _treeNodeList[i]->getInfluenceList();
-            Point2D treeNode( _treeNodeList[i]->getX(), _treeNodeList[i]->getY() );
-            Vector2D averageDir(0, 0);
+            cPoint2D treeNode( _treeNodeList[i]->getX(), _treeNodeList[i]->getY() );
+            cVector2D averageDir(0, 0);
             for ( j = 0; j < influenceList.size(); ++j )
             {
-                Vector2D dir( attractList[influenceList[j]]->getX(), attractList[influenceList[j]]->getY() );
+                cVector2D dir( attractList[influenceList[j]]->getX(), attractList[influenceList[j]]->getY() );
                 dir = dir - treeNode;
-                dir = dir.Normalize();
+                dir = dir.normalize();
                 averageDir = averageDir + dir;
             }
 
-            averageDir.Normalize();
+            averageDir.normalize();
             averageDir = averageDir * TREENODE_LENGTH;
             averageDir = averageDir + treeNode ;
 
@@ -107,10 +107,10 @@ void cTreeGenerator::colonize()
     unsigned int  attractListSize =  _pCrown->getAttractionList().size();
     for ( i = 0; i < attractListSize; ++i)
     {
-        Point2D attractpoint( _pCrown->getAttractionList()[i]->getX(), _pCrown->getAttractionList()[i]->getY() );
+        cPoint2D attractpoint( _pCrown->getAttractionList()[i]->getX(), _pCrown->getAttractionList()[i]->getY() );
         for ( j = 0; j < _treeNodeList.size(); ++j )
         {
-            Point2D treepoint( _treeNodeList[j]->getX(), _treeNodeList[j]->getY() );
+            cPoint2D treepoint( _treeNodeList[j]->getX(), _treeNodeList[j]->getY() );
             unsigned int dist = distance( attractpoint, treepoint );
             if ( dist <= ATTRACTPOINT_KILLDISTANCE )
             {
