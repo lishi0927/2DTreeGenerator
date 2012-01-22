@@ -24,11 +24,11 @@ ifeq ($(config),debug)
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/2DTreeGenerator
   DEFINES   += -DDEBUG
-  INCLUDES  += -I/usr/include
+  INCLUDES  += 
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g
   CXXFLAGS  += $(CFLAGS) 
-  LDFLAGS   += -L/usr/lib -L/usr/lib64
+  LDFLAGS   += 
   LIBS      += -lSDL -lSDL_image -lGL -lGLU
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
@@ -46,11 +46,11 @@ ifeq ($(config),release)
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/2DTreeGenerator
   DEFINES   += -DNDEBUG
-  INCLUDES  += -I/usr/include
+  INCLUDES  += 
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -O2
   CXXFLAGS  += $(CFLAGS) 
-  LDFLAGS   += -s -L/usr/lib -L/usr/lib64
+  LDFLAGS   += -s
   LIBS      += -lSDL -lSDL_image -lGL -lGLU
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
@@ -64,11 +64,11 @@ ifeq ($(config),release)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/main.o \
-	$(OBJDIR)/movableentity.o \
-	$(OBJDIR)/crown.o \
 	$(OBJDIR)/treenode.o \
+	$(OBJDIR)/crown.o \
+	$(OBJDIR)/movableentity.o \
 	$(OBJDIR)/attractionpoint.o \
+	$(OBJDIR)/main.o \
 	$(OBJDIR)/treegenerator.o \
 	$(OBJDIR)/entity.o \
 
@@ -131,19 +131,19 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 endif
 
-$(OBJDIR)/main.o: main.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/movableentity.o: movableentity.cpp
+$(OBJDIR)/treenode.o: treenode.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/crown.o: crown.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/treenode.o: treenode.cpp
+$(OBJDIR)/movableentity.o: movableentity.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/attractionpoint.o: attractionpoint.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/main.o: main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/treegenerator.o: treegenerator.cpp

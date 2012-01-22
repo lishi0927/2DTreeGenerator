@@ -27,11 +27,6 @@ public:
     virtual void    renderEntity() = 0;
     virtual bool    initEntity() = 0;
 
-protected:
-
-    unsigned short  _x;
-    unsigned short  _y;
-
 private:
 
     bool    _visible;

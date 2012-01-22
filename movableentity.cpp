@@ -7,16 +7,17 @@
 
 #include "movableentity.h"
 
-cMovableEntity::cMovableEntity(unsigned short x, unsigned short y)
+cMovableEntity::cMovableEntity(float x, float y)
+: cEntity()
+, cPoint2D( x, y )
 {
-    warp( x, y );
 }
+
 cMovableEntity::~cMovableEntity()
 {
 }
 
-void    cMovableEntity::warp( unsigned short x, unsigned short y )
+void    cMovableEntity::warp( float r, float s )
 {
-    _x = x;
-    _y = y;
+    set( r, s );
 }

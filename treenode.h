@@ -17,7 +17,7 @@ class cTreeNode : public cMovableEntity
 {
 public:
 
-    cTreeNode( unsigned short x = 0, unsigned short y = 0 );
+    cTreeNode( float x = 0.f, float y = 0.f );
     virtual ~cTreeNode();
 
     const std::vector< unsigned int >&    getInfluenceList() { return _influenceList; }

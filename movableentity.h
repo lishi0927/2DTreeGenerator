@@ -6,28 +6,22 @@
 #ifndef MOVABLEENTITY_H
 #define	MOVABLEENTITY_H
 
+#include "mymath.h"
 #include "entity.h"
 
-class cMovableEntity : public cEntity
+class cMovableEntity : public cEntity, public cPoint2D
 {
 
 public:
 
-    cMovableEntity( unsigned short x, unsigned short y );
+    cMovableEntity( float x, float y );
     virtual ~cMovableEntity();
 
-    void    warp( unsigned short x , unsigned short y);
-    unsigned short  getX() { return _x; }
-    unsigned short  getY()  { return _y; }
+    void    warp( float x , float y);
 
     // inherited from cEntity
     virtual void    renderEntity() = 0;
     virtual bool    initEntity() = 0;
-
-protected:
-
-    unsigned short _x;
-    unsigned short _y;
 
 };
 

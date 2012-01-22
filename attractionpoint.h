@@ -15,14 +15,19 @@ class cAttractionPoint : public cMovableEntity
 
 public:
     
-    cAttractionPoint( unsigned short x = 0, unsigned short y = 0 );
+    cAttractionPoint( float x = 0.f, float y = 0.f );
     virtual ~cAttractionPoint();
 
+    void        setDisabled( bool v ) { _disabled = v; }
+    bool        isDisabled() { return _disabled; }
+    
     // inherited from cEntity
     virtual void renderEntity();
     virtual bool initEntity();
 
 private:
+    
+    bool                        _disabled;
     
 };
 

@@ -46,13 +46,13 @@ bool    cCrown::fillCrown()
     unsigned int i;
     for ( i = 0; i < ATTRACTPOINT_NUMBER; ++i )
     {
-        short x = rand() % (SCREEN_W) + 1;
-        short y = rand() % (SCREEN_H * 2 / 3) + SCREEN_H / 3;
+        float x = rand() % (SCREEN_W) + 1;
+        float y = rand() % (SCREEN_H * 2 / 3) + SCREEN_H / 3;
 
 
-        double h = SCREEN_W / 2;
-        double k = ((SCREEN_H * 2 / 3) / 2) + SCREEN_H / 3;
-        double a = SCREEN_W;
+        float h = SCREEN_W / 2;
+        float k = ((SCREEN_H * 2 / 3) / 2) + SCREEN_H / 3;
+        float a = SCREEN_W;
         a = a/2;
         double b = (SCREEN_H / 3) * 2;
         b = b/2;

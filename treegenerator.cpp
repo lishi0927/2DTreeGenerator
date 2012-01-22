@@ -27,8 +27,8 @@ cTreeGenerator::~cTreeGenerator()
 
 void cTreeGenerator::init()
 {
-    unsigned short treeNodeX = rand() % (SCREEN_W / 3) +(SCREEN_W / 3); // only the 2nd third of the screen
-    unsigned short treeNodeY = 10;
+    float treeNodeX = rand() % (SCREEN_W / 3) +(SCREEN_W / 3); // only the 2nd third of the screen
+    float treeNodeY = 10.f;
     cTreeNode*  pFirstTN = new cTreeNode( treeNodeX, treeNodeY );
     _treeNodeList.push_back( pFirstTN );
 
@@ -54,48 +54,84 @@ void cTreeGenerator::colonize()
     std::vector< cAttractionPoint* > attractList = _pCrown->getAttractionList();
     for ( i = 0; i < attractList.size(); ++i )
     {
-        // todo: put vec2 in classes
-        cPoint2D aPoint( attractList[i]->getX(), attractList[i]->getY() );
-
-        int mindist = -1;
-        unsigned int mindistIDX;
-        for ( j = 0; j < _treeNodeList.size(); ++j )
+        if ( attractList[i]->isDisabled() == false )
         {
-            cPoint2D tPoint( _treeNodeList[j]->getX(), _treeNodeList[j]->getY() );
+            // todo: put vec2 in classes
+            cPoint2D aPoint( attractList[i]->x, attractList[i]->y );
 
-            unsigned int dist = distance( aPoint, tPoint );
-            if ( dist < mindist || mindist < 0 )
+            int mindist = -1;
+            unsigned int mindistIDX;
+            for ( j = 0; j < _treeNodeList.size(); ++j )
             {
-                mindist = dist;
-                mindistIDX = j;
+                cPoint2D tPoint( _treeNodeList[j]->x, _treeNodeList[j]->y );
+
+                float dist = distance( aPoint, tPoint );
+                if ( dist < mindist || mindist < 0 )
+                {
+                    mindist = dist;
+                    mindistIDX = j;
+                }
             }
+            _treeNodeList[mindistIDX]->addInfluence( i );
         }
-        _treeNodeList[mindistIDX]->addInfluence( i );
     }
 
     unsigned int treeNodeSize = _treeNodeList.size();
     for ( i = 0; i < treeNodeSize; ++i )
     {
-        unsigned int s = _treeNodeList[i]->getInfluenceList().size();
         if ( _treeNodeList[i]->getInfluenceList().size() > 0 )
         {
             std::vector< unsigned int > influenceList = _treeNodeList[i]->getInfluenceList();
-            cPoint2D treeNode( _treeNodeList[i]->getX(), _treeNodeList[i]->getY() );
+            cPoint2D treeNode( _treeNodeList[i]->x, _treeNodeList[i]->y );
             cVector2D averageDir(0, 0);
             for ( j = 0; j < influenceList.size(); ++j )
             {
-                cVector2D dir( attractList[influenceList[j]]->getX(), attractList[influenceList[j]]->getY() );
+                cVector2D dir( attractList[influenceList[j]]->x, attractList[influenceList[j]]->y );
                 dir = dir - treeNode;
                 dir = dir.normalize();
                 averageDir = averageDir + dir;
             }
 
+            if ( averageDir.x < 0 || averageDir.y < 0 )
+            {
+                int a = 1;
+            }
             averageDir.normalize();
             averageDir = averageDir * TREENODE_LENGTH;
             averageDir = averageDir + treeNode ;
-
-            cTreeNode *newNode = new cTreeNode( averageDir.x, averageDir.y );
-            _treeNodeList.push_back(newNode);
+            
+            float newX = averageDir.x;
+            float newY = averageDir.y;
+            
+            if ( newX == 0.f && newY == 0.f )
+            {
+                int a = 1;
+            }
+            
+            bool flag = true;
+            for ( j = 0; j < treeNodeSize; ++j )
+            {
+                if ( _treeNodeList[j]->x == newX && _treeNodeList[j]->y == newY )
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if ( flag == true )
+            {
+                cTreeNode *newNode = new cTreeNode( averageDir.x, averageDir.y );
+                _treeNodeList.push_back(newNode);
+            }
+            else
+            {
+                for ( j = 0; j < influenceList.size(); ++j )
+                {
+                    if ( _pCrown->getAttractionList()[ influenceList[j] ]->isDisabled() == false )
+                    {
+                            _pCrown->removeAttraction( influenceList[j] );
+                    }
+                }
+            }
         }
     }
 
@@ -107,17 +143,20 @@ void cTreeGenerator::colonize()
     unsigned int  attractListSize =  _pCrown->getAttractionList().size();
     for ( i = 0; i < attractListSize; ++i)
     {
-        cPoint2D attractpoint( _pCrown->getAttractionList()[i]->getX(), _pCrown->getAttractionList()[i]->getY() );
-        for ( j = 0; j < _treeNodeList.size(); ++j )
+        if ( _pCrown->getAttractionList()[i]->isDisabled() == false )
         {
-            cPoint2D treepoint( _treeNodeList[j]->getX(), _treeNodeList[j]->getY() );
-            unsigned int dist = distance( attractpoint, treepoint );
-            if ( dist <= ATTRACTPOINT_KILLDISTANCE )
+            cPoint2D attractpoint( _pCrown->getAttractionList()[i]->x, _pCrown->getAttractionList()[i]->y );
+            for ( j = 0; j < _treeNodeList.size(); ++j )
             {
-                _pCrown->removeAttraction( i );
-                i = 0;
-                attractListSize -= 1;
-                break;
+                cPoint2D treepoint( _treeNodeList[j]->x, _treeNodeList[j]->y );
+                unsigned int dist = distance( attractpoint, treepoint );
+                if ( dist <= ATTRACTPOINT_KILLDISTANCE )
+                {
+                    _pCrown->removeAttraction( i );
+                    i = 0;
+                    attractListSize -= 1;
+                    break;
+                }
             }
         }
     }

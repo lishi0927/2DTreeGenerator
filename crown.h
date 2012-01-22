@@ -24,7 +24,7 @@ public:
     virtual ~cCrown();
 
     std::vector< cAttractionPoint* > getAttractionList() { return _attractPointList; }
-    inline void removeAttraction( unsigned int idx ) { _attractPointList.erase(_attractPointList.begin() + idx); }
+    inline void removeAttraction( unsigned int idx ) { _attractPointList[idx]->setDisabled(true); }
 
     // inherited from cEntity
     virtual void renderEntity();
