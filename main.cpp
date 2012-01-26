@@ -75,6 +75,8 @@ void display()
                     break;
             }
         }
+        
+        SDL_Delay( getTimeLeft() ); // delay the rendering loop
     }
     
     cTreeGenerator::killInstance();

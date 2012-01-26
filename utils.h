@@ -9,16 +9,18 @@
 #include <SDL/SDL_image.h>
 #include <GL/gl.h>
 
+#include "defines.h"
+
 SDL_Surface * flipSurface( SDL_Surface * surface )
 {
     int current_line,pitch;
     SDL_Surface * fliped_surface = SDL_CreateRGBSurface(SDL_SWSURFACE,
-                                                                                           surface->w,surface->h,
-                                                                                           surface->format->BitsPerPixel,
-                                                                                           surface->format->Rmask,
-                                                                                           surface->format->Gmask,
-                                                                                           surface->format->Bmask,
-                                                                                           surface->format->Amask);
+                                                        surface->w,surface->h,
+                                                        surface->format->BitsPerPixel,
+                                                        surface->format->Rmask,
+                                                        surface->format->Gmask,
+                                                        surface->format->Bmask,
+                                                        surface->format->Amask);
 
 
 
@@ -106,6 +108,20 @@ GLuint loadTexture( const char * filename, bool useMipMap )
     SDL_FreeSurface(picture_surface);
 
     return glID;
+}
+
+Uint32  getTimeLeft( )
+{
+    static Uint32 next_time = 0;
+    Uint32 now;
+
+    now = SDL_GetTicks();
+    if ( next_time <= now ) 
+    {
+        next_time = now + TICK_INTERVAL;
+        return(0);
+    }
+    return( next_time - now );
 }
 
 #endif	/* UTILS_H */
