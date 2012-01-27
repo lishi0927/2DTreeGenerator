@@ -11,7 +11,9 @@
 #include "macros.h"
 #include "treenode.h"
 
-cTreeNode::cTreeNode( float x, float y ) : cMovableEntity( x, y )
+cTreeNode::cTreeNode( int pID, float x, float y ) 
+: cMovableEntity( x, y )
+, _parentID( pID )
 {
 }
 

@@ -3,3 +3,6 @@ nbproject
 .dep.inc
 Makefile-2DTreeGenerator.mk
 obj/
+Makefile
+2DTreeGenerator.make
+2DTreeGenerator

@@ -29,7 +29,7 @@ void cTreeGenerator::init()
 {
     float treeNodeX = rand() % (SCREEN_W / 3) +(SCREEN_W / 3); // only the 2nd third of the screen
     float treeNodeY = 10.f;
-    cTreeNode*  pFirstTN = new cTreeNode( treeNodeX, treeNodeY );
+    cTreeNode*  pFirstTN = new cTreeNode( -1, treeNodeX, treeNodeY ); // -1 to declare the first treeNode
     _treeNodeList.push_back( pFirstTN );
 
     _pCrown = new cCrown();
@@ -92,21 +92,12 @@ void cTreeGenerator::colonize()
                 averageDir = averageDir + dir;
             }
 
-            if ( averageDir.x < 0 || averageDir.y < 0 )
-            {
-                int a = 1;
-            }
             averageDir.normalize();
             averageDir = averageDir * TREENODE_LENGTH;
             averageDir = averageDir + treeNode ;
             
             float newX = averageDir.x;
             float newY = averageDir.y;
-            
-            if ( newX == 0.f && newY == 0.f )
-            {
-                int a = 1;
-            }
             
             bool flag = true;
             for ( j = 0; j < treeNodeSize; ++j )
@@ -119,7 +110,8 @@ void cTreeGenerator::colonize()
             }
             if ( flag == true )
             {
-                cTreeNode *newNode = new cTreeNode( averageDir.x, averageDir.y );
+                cTreeNode *newNode = new cTreeNode( i, averageDir.x, averageDir.y );
+                std::cout << "Pushing on " << i << std::endl;
                 _treeNodeList.push_back(newNode);
             }
             else
