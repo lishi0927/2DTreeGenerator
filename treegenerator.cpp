@@ -39,23 +39,26 @@ void cTreeGenerator::init()
         _pCrown->init();
     }
     
+    while ( colonize() == true ) ;
 }
 
-void cTreeGenerator::colonize()
+bool cTreeGenerator::colonize()
 {
     if ( _pCrown == NULL || _treeNodeList.empty() == true )
-        return;
+        return false;
 
     if ( _pCrown->getAttractionList().size() == 0 )
-        return;
+        return false;
 
     unsigned int i;
     unsigned int j;
+    bool flag = false;
     std::vector< cAttractionPoint* > attractList = _pCrown->getAttractionList();
     for ( i = 0; i < attractList.size(); ++i )
     {
         if ( attractList[i]->isDisabled() == false )
         {
+            flag = true;
             // todo: put vec2 in classes
             cPoint2D aPoint( attractList[i]->x, attractList[i]->y );
 
@@ -76,6 +79,11 @@ void cTreeGenerator::colonize()
         }
     }
 
+    if ( flag == false )
+    {
+        return false;
+    }
+    
     unsigned int treeNodeSize = _treeNodeList.size();
     for ( i = 0; i < treeNodeSize; ++i )
     {
@@ -152,12 +160,13 @@ void cTreeGenerator::colonize()
             }
         }
     }
+    return true;
 
 }
 
 void cTreeGenerator::renderOneFrame()
 {
-    colonize();
+//    colonize();
     _pCrown->render();
     unsigned int i;
     for ( i = 0; i < _treeNodeList.size(); ++i )

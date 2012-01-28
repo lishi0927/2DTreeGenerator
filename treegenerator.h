@@ -25,7 +25,7 @@ public:
 
     void    init();
     void    renderOneFrame();
-    void    colonize();
+    bool    colonize();
     
 private:
 
