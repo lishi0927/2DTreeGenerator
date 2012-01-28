@@ -9,11 +9,13 @@
 #include <stdlib.h>
 
 #include "macros.h"
+#include "treegenerator.h"
 #include "treenode.h"
 
-cTreeNode::cTreeNode( int pID, float x, float y ) 
+cTreeNode::cTreeNode( int pID, float radius, float x, float y ) 
 : cMovableEntity( x, y )
 , _parentID( pID )
+, _radius( radius )
 {
 }
 
@@ -23,17 +25,16 @@ cTreeNode::~cTreeNode()
 
 void    cTreeNode::renderEntity()
 {
+    if ( _parentID == -1 )
+        return;
+    cTreeNode* pParent = cTreeGenerator::getInstance()->getTreeNode( _parentID );
     glBegin(GL_LINES);
-        glColor3ub( TREENODE_GLCOLOR );
-        glVertex2d( SCREEN2GL_X(x - (TREENODE_SIZE / 2.0) ), SCREEN2GL_Y(y +(TREENODE_SIZE / 2.0) ) );
-        glVertex2d( SCREEN2GL_X(x + (TREENODE_SIZE / 2.0) ), SCREEN2GL_Y(y -(TREENODE_SIZE / 2.0)) );
-        glVertex2d( SCREEN2GL_X(x + (TREENODE_SIZE / 2.0) ), SCREEN2GL_Y(y +(TREENODE_SIZE / 2.0) ) );
-        glVertex2d( SCREEN2GL_X(x - (TREENODE_SIZE / 2.0) ), SCREEN2GL_Y(y -(TREENODE_SIZE / 2.0)) );
+        glColor3ub( TREESEGMENT_GLCOLOR );
+        glVertex2d( SCREEN2GL_X( x ), SCREEN2GL_Y( y ) );
+        glVertex2d( SCREEN2GL_X( pParent->x ), SCREEN2GL_Y( pParent->y ) );
     glEnd();
 }
 
 bool    cTreeNode::initEntity()
 {
 }
-
-

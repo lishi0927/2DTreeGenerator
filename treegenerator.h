@@ -26,6 +26,7 @@ public:
     void    init();
     void    renderOneFrame();
     bool    colonize();
+    cTreeNode*  getTreeNode(int id) { return _treeNodeList[id]; }
     
 private:
 
@@ -33,12 +34,11 @@ private:
     cTreeGenerator();
     ~cTreeGenerator();
 
-
 private:
 
-    cCrown*     _pCrown;
-    std::vector< cTreeNode* > _treeNodeList;
+    cCrown*                                     _pCrown;
+    std::vector< cTreeNode* >          _treeNodeList;
+    float                                          _treeNodeLen;
 };
 
 #endif	/* TREEGENERATOR_H */
-

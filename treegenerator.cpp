@@ -11,8 +11,9 @@
 #include "treegenerator.h"
 #include "mymath.h"
 
-cTreeGenerator::cTreeGenerator() :
-_pCrown( NULL )
+cTreeGenerator::cTreeGenerator() 
+:_pCrown( NULL )
+, _treeNodeLen( TREENODE_LENGTH )
 {
 }
 
@@ -27,9 +28,9 @@ cTreeGenerator::~cTreeGenerator()
 
 void cTreeGenerator::init()
 {
-    float treeNodeX = rand() % (SCREEN_W / 3) +(SCREEN_W / 3); // only the 2nd third of the screen
+    float treeNodeX = rand() % (SCREEN_W / 3) + (SCREEN_W / 3); // only the 2nd third of the screen
     float treeNodeY = 10.f;
-    cTreeNode*  pFirstTN = new cTreeNode( -1, treeNodeX, treeNodeY ); // -1 to declare the first treeNode
+    cTreeNode*  pFirstTN = new cTreeNode( -1, TREENODE_LENGTH, treeNodeX, treeNodeY ); // -1 to declare the first treeNode
     _treeNodeList.push_back( pFirstTN );
 
     _pCrown = new cCrown();
@@ -66,16 +67,17 @@ bool cTreeGenerator::colonize()
             unsigned int mindistIDX;
             for ( j = 0; j < _treeNodeList.size(); ++j )
             {
-                cPoint2D tPoint( _treeNodeList[j]->x, _treeNodeList[j]->y );
-
-                float dist = distance( aPoint, tPoint );
+                float dist = distance( *_treeNodeList[j], *attractList[i] );
                 if ( dist < mindist || mindist < 0 )
                 {
                     mindist = dist;
                     mindistIDX = j;
                 }
             }
-            _treeNodeList[mindistIDX]->addInfluence( i );
+            if ( mindist > 0 )
+            {
+                    _treeNodeList[mindistIDX]->addInfluence( i );
+            }
         }
     }
 
@@ -101,7 +103,7 @@ bool cTreeGenerator::colonize()
             }
 
             averageDir.normalize();
-            averageDir = averageDir * TREENODE_LENGTH;
+            averageDir = averageDir * ( _treeNodeList[i]->getRadius() );
             averageDir = averageDir + treeNode ;
             
             float newX = averageDir.x;
@@ -118,8 +120,11 @@ bool cTreeGenerator::colonize()
             }
             if ( flag == true )
             {
-                cTreeNode *newNode = new cTreeNode( i, averageDir.x, averageDir.y );
-                std::cout << "Pushing on " << i << std::endl;
+                float treeNodeLen = _treeNodeList[i]->getRadius() - ( _treeNodeList[i]->getRadius() / TREENODE_LENGTH );
+//                float treeNodeLen = _treeNodeLen  - ( _treeNodeLen / 100 );
+               treeNodeLen = treeNodeLen < 0.f ? 0.f : treeNodeLen; //TODO: make it stop on minimal radius
+                //_treeNodeLen = treeNodeLen;
+                cTreeNode *newNode = new cTreeNode( i, treeNodeLen, averageDir.x, averageDir.y );
                 _treeNodeList.push_back(newNode);
             }
             else
@@ -166,7 +171,6 @@ bool cTreeGenerator::colonize()
 
 void cTreeGenerator::renderOneFrame()
 {
-//    colonize();
     _pCrown->render();
     unsigned int i;
     for ( i = 0; i < _treeNodeList.size(); ++i )
