@@ -3,7 +3,7 @@
 
 Basic application of the space colonization algorithm for tree generation (in 2D).
 
-## Note ## 
+## Note
 
 Current version is able to:
 
@@ -12,14 +12,14 @@ Current version is able to:
 * Resolve the tree with a simple render (made of lines)
 
 
-## Setup ## 
+## Setup
 
 In order to build and run 2DTreeGenerator, be sure to have all the following installed:
 
-* Compiler stuff : g++ / gcc
-* SDL stuff : libSDL and libSDL_image
-* OpenGL stuff : libGL and libGLU
-* Premake : premake4
+* Compiler stuff : __g++__ / __gcc__
+* SDL stuff : __libSDL__ and __libSDL_image__
+* OpenGL stuff : __libGL__ and __libGLU__
+* Premake : __premake4__
 
 To build 2DTreeGenerator you first have to generate the Makefile (or any other project configuration, see [Premake4 documentation](http://industriousone.com/what-premake) for more informations.) : 
 
@@ -33,7 +33,7 @@ And run :
 
     $ ./2DTreeGenerator
 
-## Screenshots ## 
+## Screenshots
 
 ![1st screen](https://github.com/lvictorino/2DTreeGenerator/blob/master/screenshots/2DTree_1.png?raw=true)
 
