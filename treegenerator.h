@@ -38,7 +38,6 @@ private:
 
     cCrown*                                     _pCrown;
     std::vector< cTreeNode* >          _treeNodeList;
-    float                                          _treeNodeLen;
 };
 
 #endif	/* TREEGENERATOR_H */

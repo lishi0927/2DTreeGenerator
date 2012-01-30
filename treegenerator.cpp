@@ -13,7 +13,6 @@
 
 cTreeGenerator::cTreeGenerator() 
 :_pCrown( NULL )
-, _treeNodeLen( TREENODE_LENGTH )
 {
 }
 
@@ -28,11 +27,13 @@ cTreeGenerator::~cTreeGenerator()
 
 void cTreeGenerator::init()
 {
-    float treeNodeX = rand() % (SCREEN_W / 3) + (SCREEN_W / 3); // only the 2nd third of the screen
-    float treeNodeY = 10.f;
+    // set up the first tree node
+    float treeNodeX = rand() % (SCREEN_W / 3) + (SCREEN_W / 3); // only the 2nd third of the screen width is used
+    float treeNodeY = 10.f; // fixed Y position
     cTreeNode*  pFirstTN = new cTreeNode( -1, TREENODE_LENGTH, treeNodeX, treeNodeY ); // -1 to declare the first treeNode
     _treeNodeList.push_back( pFirstTN );
 
+    // create and init the crown
     _pCrown = new cCrown();
     assert( _pCrown != NULL );
     if ( _pCrown != NULL )
@@ -40,9 +41,16 @@ void cTreeGenerator::init()
         _pCrown->init();
     }
     
+    // compute the whole tree before rendering loop
     while ( colonize() == true ) ;
 }
 
+/*
+ * How it works:
+ * - checks the closest tree node for each attraction point
+ * - computes an average vector based on every attraction point attached to each tree node
+ * - disables every attraction point with a tree node in its KILLDISTANCE
+ */
 bool cTreeGenerator::colonize()
 {
     if ( _pCrown == NULL || _treeNodeList.empty() == true )
@@ -60,8 +68,6 @@ bool cTreeGenerator::colonize()
         if ( attractList[i]->isDisabled() == false )
         {
             flag = true;
-            // todo: put vec2 in classes
-            cPoint2D aPoint( attractList[i]->x, attractList[i]->y );
 
             int mindist = -1;
             unsigned int mindistIDX;
@@ -81,6 +87,7 @@ bool cTreeGenerator::colonize()
         }
     }
 
+    // if no attraction point is available let's kill the optimize loop
     if ( flag == false )
     {
         return false;
@@ -106,28 +113,25 @@ bool cTreeGenerator::colonize()
             averageDir = averageDir * ( _treeNodeList[i]->getRadius() );
             averageDir = averageDir + treeNode ;
             
-            float newX = averageDir.x;
-            float newY = averageDir.y;
-            
             bool flag = true;
+            // we have to be sure that we're not creating the same point again and again
             for ( j = 0; j < treeNodeSize; ++j )
             {
-                if ( _treeNodeList[j]->x == newX && _treeNodeList[j]->y == newY )
+                if ( *_treeNodeList[j] == averageDir ) 
                 {
                     flag = false;
                     break;
                 }
             }
-            if ( flag == true )
+            
+            if ( flag == true ) // if we have to create a new tree node
             {
                 float treeNodeLen = _treeNodeList[i]->getRadius() - ( _treeNodeList[i]->getRadius() / TREENODE_LENGTH );
-//                float treeNodeLen = _treeNodeLen  - ( _treeNodeLen / 100 );
                treeNodeLen = treeNodeLen < 0.f ? 0.f : treeNodeLen; //TODO: make it stop on minimal radius
-                //_treeNodeLen = treeNodeLen;
                 cTreeNode *newNode = new cTreeNode( i, treeNodeLen, averageDir.x, averageDir.y );
                 _treeNodeList.push_back(newNode);
             }
-            else
+            else // if we're trying to create a tree node on an existing tree node
             {
                 for ( j = 0; j < influenceList.size(); ++j )
                 {
@@ -140,11 +144,13 @@ bool cTreeGenerator::colonize()
         }
     }
 
-    // clearing influence list  and useless attraction points for next colonize iteration
+    // clears influence list  and useless attraction points for each treenode in order to prepare next colonize iteration
     for ( i = 0; i < _treeNodeList.size(); ++i )
     {
         _treeNodeList[i]->clearInfluence();
     }
+    
+    // disables every attraction point with treenode in its KILLDISTANCE
     unsigned int  attractListSize =  _pCrown->getAttractionList().size();
     for ( i = 0; i < attractListSize; ++i)
     {

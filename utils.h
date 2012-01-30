@@ -21,9 +21,7 @@ SDL_Surface * flipSurface( SDL_Surface * surface )
                                                         surface->format->Gmask,
                                                         surface->format->Bmask,
                                                         surface->format->Amask);
-
-
-
+    
     SDL_LockSurface(surface);
     SDL_LockSurface(fliped_surface);
 
@@ -57,13 +55,11 @@ GLuint loadTexture( const char * filename, bool useMipMap )
     }
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-
     rmask = 0xff000000;
     gmask = 0x00ff0000;
     bmask = 0x0000ff00;
     amask = 0x000000ff;
 #else
-
     rmask = 0x000000ff;
     gmask = 0x0000ff00;
     bmask = 0x00ff0000;
@@ -89,9 +85,7 @@ GLuint loadTexture( const char * filename, bool useMipMap )
 
     if (useMipMap)
     {
-
         gluBuild2DMipmaps( GL_TEXTURE_2D, 4, gl_fliped_surface->w, gl_fliped_surface->h, GL_RGBA, GL_UNSIGNED_BYTE, gl_fliped_surface->pixels );
-
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
     }
     else
@@ -101,7 +95,6 @@ GLuint loadTexture( const char * filename, bool useMipMap )
     }
     
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-
 
     SDL_FreeSurface(gl_fliped_surface);
     SDL_FreeSurface(gl_surface);
