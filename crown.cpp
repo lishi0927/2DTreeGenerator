@@ -41,35 +41,35 @@ void    cCrown::renderEntity()
     }
 }
 
-bool    cCrown::fillCrown()
+void    cCrown::createRandomElipsisCrown()
 {
+    float minw = 50.f;
+    float minh = 25.f;
+    float maxw = 300.f;
+    float maxh = 150.f;
+    
+    float a = rand() % (int)(maxw - minw) + minw; // elipsis width
+    float b = rand() % (int)(maxh - minh) + minh; // elipsis height
+    
+    float h = rand() % (int)(SCREEN_W) + 1.f; // elipsis center x position
+    float k = rand() % (int)(SCREEN_H / 3)*2 + SCREEN_H / 3; // elipsis center y position
+    
+    // elipsis equation = ( (x - h) / a )^2 + ( (y - k) / b )^2
+    
     unsigned int i;
-    for ( i = 0; i < ATTRACTPOINT_NUMBER; ++i )
+    for ( i = 0; i < 50; ++i )
     {
-        float x = rand() % (SCREEN_W) + 1;
-        float y = rand() % (SCREEN_H * 2 / 3) + SCREEN_H / 3;
+        float x = rand() % (int)a + ( h - a / 2 );
+        float y = rand() % (int)k + ( k - b / 2 );
 
-
-        float h = SCREEN_W / 2;
-        float k = ((SCREEN_H * 2 / 3) / 2) + SCREEN_H / 3;
-        float a = SCREEN_W;
-        a = a/2;
-        double b = (SCREEN_H / 3) * 2;
-        b = b/2;
-
-        bool isInElipsis = ((pow((x - h) / a, 2) + (pow((y - k)/b, 2)) ) <= 1);
-
+        bool isInElipsis = ((pow((x - h)/a, 2) + (pow((y - k)/b, 2))) <= 1);
+        
         if ( isInElipsis == true )
         {
-
             cAttractionPoint*   pAttractPoint = new cAttractionPoint( x, y );
             if ( pAttractPoint->init() == true )
             {
                 _attractPointList.push_back( pAttractPoint );
-            }
-            else
-            {
-                return false;
             }
         }
         else
@@ -77,7 +77,16 @@ bool    cCrown::fillCrown()
             i = i - 1; // if not contained in elipsis then re-compute another point.
         }
     }
-    return true;
+}
+
+bool    cCrown::fillCrown()
+{
+    unsigned short i;
+    
+    for ( i = 0; i < 10; ++i )
+    {
+        createRandomElipsisCrown();
+    }
 }
 
 bool    cCrown::initEntity()

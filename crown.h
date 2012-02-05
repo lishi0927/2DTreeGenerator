@@ -32,6 +32,7 @@ public:
 
 private:
     bool        fillCrown();
+    void        createRandomElipsisCrown();
 
 private:
 
