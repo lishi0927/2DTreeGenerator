@@ -45,23 +45,12 @@ void cTreeGenerator::init()
     while ( colonize() == true ) ;
 }
 
-/*
- * How it works:
- * - checks the closest tree node for each attraction point
- * - computes an average vector based on every attraction point attached to each tree node
- * - disables every attraction point with a tree node in its KILLDISTANCE
- */
-bool cTreeGenerator::colonize()
+bool cTreeGenerator::defineAttractions()
 {
-    if ( _pCrown == NULL || _treeNodeList.empty() == true )
-        return false;
-
-    if ( _pCrown->getAttractionList().size() == 0 )
-        return false;
-
     unsigned int i;
     unsigned int j;
     bool flag = false;
+
     std::vector< cAttractionPoint* > attractList = _pCrown->getAttractionList();
     for ( i = 0; i < attractList.size(); ++i )
     {
@@ -88,11 +77,15 @@ bool cTreeGenerator::colonize()
     }
 
     // if no attraction point is available let's kill the optimize loop
-    if ( flag == false )
-    {
-        return false;
-    }
+    return flag;    
+}
+
+bool cTreeGenerator::computeNextPoint()
+{
+    unsigned int i;
+    unsigned int j;
     
+    std::vector< cAttractionPoint* > attractList = _pCrown->getAttractionList();
     unsigned int treeNodeSize = _treeNodeList.size();
     for ( i = 0; i < treeNodeSize; ++i )
     {
@@ -126,7 +119,8 @@ bool cTreeGenerator::colonize()
             
             if ( flag == true ) // if we have to create a new tree node
             {
-                float treeNodeLen = _treeNodeList[i]->getRadius() - ( _treeNodeList[i]->getRadius() / TREENODE_LENGTH );
+//                float treeNodeLen = _treeNodeList[i]->getRadius() - ( _treeNodeList[i]->getRadius() / TREENODE_LENGTH );
+                float treeNodeLen =  TREENODE_LENGTH;
                treeNodeLen = treeNodeLen < 0.f ? 0.f : treeNodeLen; //TODO: make it stop on minimal radius
                 cTreeNode *newNode = new cTreeNode( i, treeNodeLen, averageDir.x, averageDir.y );
                 _treeNodeList.push_back(newNode);
@@ -143,7 +137,15 @@ bool cTreeGenerator::colonize()
             }
         }
     }
+    return true;
+}
 
+bool cTreeGenerator::clearInfluence()
+{
+    
+    unsigned int i;
+    unsigned int j;
+    
     // clears influence list  and useless attraction points for each treenode in order to prepare next colonize iteration
     for ( i = 0; i < _treeNodeList.size(); ++i )
     {
@@ -171,8 +173,25 @@ bool cTreeGenerator::colonize()
             }
         }
     }
-    return true;
+    return true;    
+}
 
+/*
+ * How it works:
+ * - checks the closest tree node for each attraction point
+ * - computes an average vector based on every attraction point attached to each tree node
+ * - disables every attraction point with a tree node in its KILLDISTANCE
+ */
+bool cTreeGenerator::colonize()
+{
+    if ( _pCrown == NULL || _treeNodeList.empty() == true )
+        return false;
+
+    if ( _pCrown->getAttractionList().size() == 0 )
+        return false;
+    
+    return defineAttractions() && computeNextPoint() && clearInfluence();
+    
 }
 
 void cTreeGenerator::renderOneFrame()

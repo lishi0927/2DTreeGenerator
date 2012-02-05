@@ -34,6 +34,10 @@ private:
     cTreeGenerator();
     ~cTreeGenerator();
 
+    bool        defineAttractions();
+    bool        computeNextPoint();
+    bool        clearInfluence();
+    
 private:
 
     cCrown*                                     _pCrown;
