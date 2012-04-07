@@ -41,28 +41,17 @@ void    cCrown::renderEntity()
     }
 }
 
-void    cCrown::createRandomElipsisCrown()
+// elipsis equation = ( (x - h) / a )^2 + ( (y - k) / b )^2
+void    cCrown::createElipsisCrown( float a, float b, float h, float k )
 {
-    float minw = 50.f;
-    float minh = 25.f;
-    float maxw = 300.f;
-    float maxh = 150.f;
-    
-    float a = rand() % (int)(maxw - minw) + minw; // elipsis width
-    float b = rand() % (int)(maxh - minh) + minh; // elipsis height
-    
-    float h = rand() % (int)(SCREEN_W) + 1.f; // elipsis center x position
-    float k = rand() % (int)(SCREEN_H / 3)*2 + SCREEN_H / 3; // elipsis center y position
-    
-    // elipsis equation = ( (x - h) / a )^2 + ( (y - k) / b )^2
     
     unsigned int i;
-    for ( i = 0; i < 50; ++i )
+    for ( i = 0; i < ATTRACTPOINT_NUMBER; ++i )
     {
-        float x = rand() % (int)a + ( h - a / 2 );
-        float y = rand() % (int)k + ( k - b / 2 );
-
-        bool isInElipsis = ((pow((x - h)/a, 2) + (pow((y - k)/b, 2))) <= 1);
+        float x = rand() % (int)SCREEN_W;
+        float y = rand() % (int)SCREEN_H;
+        
+        bool isInElipsis = ((pow((x - h)/a, 2) + (pow((y - k)/b, 2))) <= 1.f);
         
         if ( isInElipsis == true )
         {
@@ -79,14 +68,28 @@ void    cCrown::createRandomElipsisCrown()
     }
 }
 
+void    cCrown::createRandomElipsisCrown()
+{
+    float minw = 50.f;
+    float minh = 25.f;
+    float maxw = 300.f;
+    float maxh = 150.f;
+    
+    float a = rand() % (int)(maxw - minw) + minw; // elipsis width
+    float b = rand() % (int)(maxh - minh) + minh; // elipsis height
+    
+    float h = rand() % (int)(SCREEN_W) + 1.f; // elipsis center x position
+    float k = rand() % (int)(SCREEN_H / 3)*2 + SCREEN_H / 3; // elipsis center y position
+
+    createElipsisCrown( a, b, h, k );
+}
+
 bool    cCrown::fillCrown()
 {
     unsigned short i;
     
-    for ( i = 0; i < 10; ++i )
-    {
-        createRandomElipsisCrown();
-    }
+//    createRandomElipsisCrown();
+    createElipsisCrown( 200.f,  100.f, SCREEN_W / 2.f, SCREEN_H / 2.f);
 }
 
 bool    cCrown::initEntity()

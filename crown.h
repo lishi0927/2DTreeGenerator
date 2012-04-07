@@ -33,6 +33,7 @@ public:
 private:
     bool        fillCrown();
     void        createRandomElipsisCrown();
+    void        createElipsisCrown( float a, float b, float h, float k);
 
 private:
 

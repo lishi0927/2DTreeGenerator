@@ -119,11 +119,11 @@ bool cTreeGenerator::computeNextPoint()
             
             if ( flag == true ) // if we have to create a new tree node
             {
-//                float treeNodeLen = _treeNodeList[i]->getRadius() - ( _treeNodeList[i]->getRadius() / TREENODE_LENGTH );
-                float treeNodeLen =  TREENODE_LENGTH;
+               //float treeNodeLen = _treeNodeList[i]->getRadius() - ( _treeNodeList[i]->getRadius() / TREENODE_LENGTH );
+               float treeNodeLen =  TREENODE_LENGTH;
                treeNodeLen = treeNodeLen < 0.f ? 0.f : treeNodeLen; //TODO: make it stop on minimal radius
-                cTreeNode *newNode = new cTreeNode( i, treeNodeLen, averageDir.x, averageDir.y );
-                _treeNodeList.push_back(newNode);
+               cTreeNode *newNode = new cTreeNode( i, treeNodeLen, averageDir.x, averageDir.y );
+               _treeNodeList.push_back(newNode);
             }
             else // if we're trying to create a tree node on an existing tree node
             {
