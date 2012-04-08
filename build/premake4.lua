@@ -7,8 +7,12 @@ solution "2DTreeGenerator"
       kind "ConsoleApp"
       language "C++"
 
-      files { "**.h", "**.cpp" }
-      links { "SDL", "SDL_image" }
+      location( "../" )
+      objdir "obj"
+
+      files { "../src/**.h", "../src/**.cpp" }
+      links { "SDL"
+      	    , "SDL_image" }
 
       if os.get() == "macosx" then
          links { "SDLmain", "Cocoa.framework", "OpenGL.framework" }
@@ -23,8 +27,10 @@ solution "2DTreeGenerator"
 
          defines { "DEBUG" }
          flags { "Symbols" }
+	 targetdir "../bin/debug"
  
       configuration "Release"
 
          defines { "NDEBUG" }
-         flags { "Optimize" }    
+         flags { "Optimize" }
+	 targetdir "../bin/release"
