@@ -9,15 +9,17 @@
 #include "mymath.h"
 #include "entity.h"
 
-class cMovableEntity : public cEntity, public cPoint2D
+class cMovableEntity : public cEntity, public cPoint3D
 {
 
 public:
 
-    cMovableEntity( float x, float y );
+    cMovableEntity( float x, float y, float z );
+    cMovableEntity( cPoint3D &point );
     virtual ~cMovableEntity();
 
-    void    warp( float x , float y);
+    void    warp( float x , float y, float z );
+    void    warp( cPoint3D &point );
 
     // inherited from cEntity
     virtual void    renderEntity() = 0;

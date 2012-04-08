@@ -92,11 +92,15 @@ bool cTreeGenerator::computeNextPoint()
         if ( _treeNodeList[i]->getInfluenceList().size() > 0 )
         {
             std::vector< unsigned int > influenceList = _treeNodeList[i]->getInfluenceList();
-            cPoint2D treeNode( _treeNodeList[i]->x, _treeNodeList[i]->y );
-            cVector2D averageDir(0, 0);
+            cPoint3D treeNode(  _treeNodeList[i]->x, 
+                                _treeNodeList[i]->y, 
+                                _treeNodeList[i]->z );
+            cVector3D averageDir(0.f, 0.f, 0.f);
             for ( j = 0; j < influenceList.size(); ++j )
             {
-                cVector2D dir( attractList[influenceList[j]]->x, attractList[influenceList[j]]->y );
+                cVector3D dir(  attractList[influenceList[j]]->x, 
+                                attractList[influenceList[j]]->y,
+                                attractList[influenceList[j]]->z ); // todo: stock influenceList[j] somewhere
                 dir = dir - treeNode;
                 dir = dir.normalize();
                 averageDir = averageDir + dir;

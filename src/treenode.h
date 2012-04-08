@@ -17,7 +17,11 @@ class cTreeNode : public cMovableEntity
 {
 public:
 
-    cTreeNode( int pID, float radius, float x = 0.f, float y = 0.f );
+    cTreeNode(  int pID, 
+                float radius, 
+                float x = 0.f, 
+                float y = 0.f, 
+                float z = 0.f );
     virtual ~cTreeNode();
 
     const std::vector< unsigned int >&    getInfluenceList() { return _influenceList; }

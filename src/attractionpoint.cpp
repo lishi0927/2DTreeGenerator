@@ -10,7 +10,8 @@
 #include "macros.h"
 #include "attractionpoint.h"
 
-cAttractionPoint::cAttractionPoint( float x, float y ): cMovableEntity(x, y)
+cAttractionPoint::cAttractionPoint( float x, float y, float z )
+: cMovableEntity(x, y, z)
 {
 }
 

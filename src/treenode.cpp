@@ -12,8 +12,8 @@
 #include "treegenerator.h"
 #include "treenode.h"
 
-cTreeNode::cTreeNode( int pID, float radius, float x, float y ) 
-: cMovableEntity( x, y )
+cTreeNode::cTreeNode( int pID, float radius, float x, float y, float z ) 
+: cMovableEntity( x, y, z )
 , _parentID( pID )
 , _radius( radius )
 {

@@ -15,7 +15,7 @@ class cAttractionPoint : public cMovableEntity
 
 public:
     
-    cAttractionPoint( float x = 0.f, float y = 0.f );
+    cAttractionPoint( float x = 0.f, float y = 0.f, float z = 0.f );
     virtual ~cAttractionPoint();
 
     void        setDisabled( bool v ) { _disabled = v; }
