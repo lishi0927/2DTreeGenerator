@@ -23,15 +23,15 @@ In order to build and run 2DTreeGenerator, be sure to have all the following ins
 
 To build 2DTreeGenerator you first have to generate the Makefile (or any other project configuration, see [Premake4 documentation](http://industriousone.com/what-premake) for more informations.) : 
 
-    $ premake4 gmake
+    $ ./gmake.premake
 
 The build thanks to :
 
-    $ make
+    $ make config=release
 
 And run :
 
-    $ ./2DTreeGenerator
+    $ ./bin/release/2DTreeGenerator
 
 ## Screenshots
 
