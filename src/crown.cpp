@@ -44,7 +44,6 @@ void    cCrown::renderEntity()
 // elipsis equation = ( (x - h) / a )^2 + ( (y - k) / b )^2
 void    cCrown::createElipsisCrown( float a, float b, float h, float k )
 {
-    
     unsigned int i;
     for ( i = 0; i < ATTRACTPOINT_NUMBER; ++i )
     {
@@ -84,12 +83,42 @@ void    cCrown::createRandomElipsisCrown()
     createElipsisCrown( a, b, h, k );
 }
 
+void    cCrown::createSphericCrown( float radius, float xSphere, float ySphere, float zSphere )
+{
+    cPoint3D sphere( 0.f, 0.f, 0.f );
+    unsigned int i;
+    for ( i = 0; i < ATTRACTPOINT_NUMBER; ++i )
+    {
+        float x = rand() % ((int)radius * 2) - radius;
+        float y = rand() % ((int)radius * 2) - radius;
+        float z = rand() % ((int)radius * 2) - radius;
+
+        cPoint3D newPoint( x, y, z );
+
+        bool isInSphere = distance( newPoint, sphere ) <= radius;
+
+        if ( isInSphere == true )
+        {
+            cAttractionPoint*   pAttractPoint = new cAttractionPoint( x + xSphere, y + ySphere, z);
+            if ( pAttractPoint->init() == true )
+            {
+                _attractPointList.push_back( pAttractPoint );
+            }
+        }
+        else
+        {
+            i = i - 1; // if not contained in elipsis then re-compute another point.
+        }
+    }
+}
+
 bool    cCrown::fillCrown()
 {
     unsigned short i;
-    
+
+    createSphericCrown( 200.f, SCREEN_W / 2.f, SCREEN_H / 2.f, 0.f );    
 //    createRandomElipsisCrown();
-    createElipsisCrown( 200.f,  100.f, SCREEN_W / 2.f, SCREEN_H / 2.f);
+//    createElipsisCrown( 200.f,  100.f, SCREEN_W / 2.f, SCREEN_H / 2.f);
 }
 
 bool    cCrown::initEntity()

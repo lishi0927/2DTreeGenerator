@@ -30,8 +30,8 @@ void    cTreeNode::renderEntity()
     cTreeNode* pParent = cTreeGenerator::getInstance()->getTreeNode( _parentID );
     glBegin(GL_LINES);
         glColor3ub( TREESEGMENT_GLCOLOR );
-        glVertex2d( SCREEN2GL_X( x ), SCREEN2GL_Y( y ) );
-        glVertex2d( SCREEN2GL_X( pParent->x ), SCREEN2GL_Y( pParent->y ) );
+        glVertex3d( SCREEN2GL_X( x ), SCREEN2GL_Y( y ), SCREEN2GL_Z( z ) );
+        glVertex3d( SCREEN2GL_X( pParent->x ), SCREEN2GL_Y( pParent->y ), SCREEN2GL_Z( pParent->z ) );
     glEnd();
 }
 

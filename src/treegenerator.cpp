@@ -123,10 +123,8 @@ bool cTreeGenerator::computeNextPoint()
             
             if ( flag == true ) // if we have to create a new tree node
             {
-               //float treeNodeLen = _treeNodeList[i]->getRadius() - ( _treeNodeList[i]->getRadius() / TREENODE_LENGTH );
-               float treeNodeLen =  TREENODE_LENGTH;
-               treeNodeLen = treeNodeLen < 0.f ? 0.f : treeNodeLen; //TODO: make it stop on minimal radius
-               cTreeNode *newNode = new cTreeNode( i, treeNodeLen, averageDir.x, averageDir.y );
+               float treeNodeLen =  TREENODE_LENGTH; // TODO: length has to change to simulate smaller branches
+               cTreeNode *newNode = new cTreeNode( i, treeNodeLen, averageDir.x, averageDir.y, averageDir.z );
                _treeNodeList.push_back(newNode);
             }
             else // if we're trying to create a tree node on an existing tree node
@@ -135,7 +133,7 @@ bool cTreeGenerator::computeNextPoint()
                 {
                     if ( _pCrown->getAttractionList()[ influenceList[j] ]->isDisabled() == false )
                     {
-                            _pCrown->removeAttraction( influenceList[j] );
+                        _pCrown->removeAttraction( influenceList[j] );
                     }
                 }
             }
@@ -162,10 +160,10 @@ bool cTreeGenerator::clearInfluence()
     {
         if ( _pCrown->getAttractionList()[i]->isDisabled() == false )
         {
-            cPoint2D attractpoint( _pCrown->getAttractionList()[i]->x, _pCrown->getAttractionList()[i]->y );
+            cPoint3D attractpoint( _pCrown->getAttractionList()[i]->x, _pCrown->getAttractionList()[i]->y, _pCrown->getAttractionList()[i]->z );
             for ( j = 0; j < _treeNodeList.size(); ++j )
             {
-                cPoint2D treepoint( _treeNodeList[j]->x, _treeNodeList[j]->y );
+                cPoint3D treepoint( _treeNodeList[j]->x, _treeNodeList[j]->y, _treeNodeList[j]->z );
                 unsigned int dist = distance( attractpoint, treepoint );
                 if ( dist <= ATTRACTPOINT_KILLDISTANCE )
                 {

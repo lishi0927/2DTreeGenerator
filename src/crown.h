@@ -34,6 +34,7 @@ private:
     bool        fillCrown();
     void        createRandomElipsisCrown();
     void        createElipsisCrown( float a, float b, float h, float k);
+    void        createSphericCrown( float radius, float x, float y, float z );
 
 private:
 

@@ -65,6 +65,8 @@ void display()
         }
         
         SDL_Delay( getTimeLeft() ); // delay the rendering loop
+        glRotatef(0.1f, 0.0, 1.0, 0.0);
+
     }
     
     cTreeGenerator::killInstance();

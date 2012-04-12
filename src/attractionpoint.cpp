@@ -13,6 +13,7 @@
 cAttractionPoint::cAttractionPoint( float x, float y, float z )
 : cMovableEntity(x, y, z)
 {
+    std::cout << "attractionpoint: " << x << " " << y << " " << z << std::endl;
 }
 
 cAttractionPoint::~cAttractionPoint()
@@ -26,11 +27,11 @@ void    cAttractionPoint::renderEntity()
     
     glBegin(GL_LINES);
         glColor3ub( ATTRACTPOINT_GLCOLOR );
-        glVertex2d( SCREEN2GL_X(x - (ATTRACTPOINT_SIZE / 2.0) ), SCREEN2GL_Y(y) );
-        glVertex2d( SCREEN2GL_X(x + (ATTRACTPOINT_SIZE / 2.0) ), SCREEN2GL_Y(y) );
+        glVertex3d( SCREEN2GL_X(x - (ATTRACTPOINT_SIZE / 2.0) ), SCREEN2GL_Y(y), SCREEN2GL_Z(z) );
+        glVertex3d( SCREEN2GL_X(x + (ATTRACTPOINT_SIZE / 2.0) ), SCREEN2GL_Y(y), SCREEN2GL_Z(z) );
 
-        glVertex2d( SCREEN2GL_X(x), SCREEN2GL_Y(y  - (ATTRACTPOINT_SIZE / 2.0) ) );
-        glVertex2d( SCREEN2GL_X(x), SCREEN2GL_Y(y  + (ATTRACTPOINT_SIZE / 2.0) ) );
+        glVertex3d( SCREEN2GL_X(x), SCREEN2GL_Y(y  - (ATTRACTPOINT_SIZE / 2.0) ), SCREEN2GL_Z(z) );
+        glVertex3d( SCREEN2GL_X(x), SCREEN2GL_Y(y  + (ATTRACTPOINT_SIZE / 2.0) ), SCREEN2GL_Z(z) );
     glEnd();
 }
 
